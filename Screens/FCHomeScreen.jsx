@@ -5,6 +5,8 @@ import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TextInput } from 'react-native-gesture-handler';
 import FCModalStack from './FCModalStack'
+import FCCreateCategory from './FCCreateCategory';
+import FCCategories from './FCCategories';
 
 const logo = require('../assets/Logo.png');
 
@@ -18,37 +20,44 @@ function FCHomeScreen({ navigation, route }) {
 
         return unsubscribe;
     }, [navigation]);
-    useEffect(() => {
-        if (route.params?.post) {
-            // Post updated, do something with `route.params.post`
-            // For example, send the post to the server
-        }
-    }, [route.params?.post]);
-    const [count, setCount] = useState(0);
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <Button onPress={() => setCount(c => c + 1)} title="Update count" />
-            ),
-        });
-    }, [navigation]);
+    // useEffect(() => {
+    //     if (route.params?.post) {
+    //         // Post updated, do something with `route.params.post`
+    //         // For example, send the post to the server
+    //     }
+    // }, [route.params?.post]);
+    //const [count, setCount] = useState(0);
+    // useLayoutEffect(() => {
+    //     navigation.setOptions({
+    //         headerRight: () => (
+    //             <Button onPress={() => setCount(c => c + 1)} title="Update count" />
+    //         ),
+    //     });
+    // }, [navigation]);
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Home Screen </Text>
-            <Text>Count: {count}</Text>
-            <Button
+        <View style={{ flex: 1, alignItems: 'center'/*, justifyContent: 'center'*/ }}>
+            {/* <Button
                 title="Go to Details"
                 onPress={() => {
-                    /* 1. Navigate to the Details route with params */
-                    navigation.navigate('Details', {
+                    navigation.navigate('Details');
+                }}
+            /> 
+            <Text></Text>*/}
+            <Button
+                title="Create New Category"
+                onPress={() => {
+                    navigation.navigate('FCCreateCategory'
+                        //, {
                         //itemId: 86,
-                        otherParam: 'anything you want here',
-                    });
-                    navigation.setParams({ itemId: 69 })
+                        //otherParam: 'anything you want here',
+                        //}
+                    );
+                    //navigation.setParams({ itemId: 69 })
                 }}
             />
             <Text>{'\n'}</Text>
+            {/* <Text>Count: {count}</Text>
             <Button
                 title="Create post"
                 onPress={() => navigation.navigate('CreatePost')}
@@ -72,7 +81,7 @@ function FCHomeScreen({ navigation, route }) {
             <Button
                 title="Go to FCModalStack"
                 onPress={() => navigation.navigate('FCModalStack')}
-            />
+            /> */}
         </View>
     );
 }
@@ -180,17 +189,16 @@ function App() {
                     headerTitleStyle: {
                         fontWeight: 'bold',
                     },
-
                 }}>
                 <Stack.Screen
                     name="Home"
-                    component={FCHomeScreen}
+                    component={FCCategories}
                     //options={{ title: 'Categories' }}
                     //options={({ route }) => ({ title: route.params?.header })}
                     //initialParams={{ title: "Categories" }}
                     options={({ navigation, route }) => ({
                         title: 'Categories',
-                        headerTitle: props => <LogoTitle {...props} />,
+                        //headerRight: props => <LogoTitle {...props} />,
                         // headerStyle: {
                         //     backgroundColor: '#f4511e',
                         // },
@@ -200,18 +208,32 @@ function App() {
                         // },
                         headerRight: () => (
                             <Button
-                                onPress={() => alert('This is a button!')}
-                                title="Info"
-                                color="#06F"
-
-                            />)
+                                title="Create New Category"
+                                onPress={() => {
+                                    navigation.navigate('FCCreateCategory'
+                                        //, {
+                                        //itemId: 86,
+                                        //otherParam: 'anything you want here',
+                                        //}
+                                    );
+                                    //navigation.setParams({ itemId: 69 })
+                                }}
+                            />
+                        )
                     })}
-
                 />
+                <Stack.Screen
+                    name="FCCreateCategory"
+                    component={FCCreateCategory}
+                // options={({ route }) => ({
+                //     title: route.params.name,
+                // })}
+                />
+                {/* 
                 <Stack.Screen
                     name="Details"
                     component={DetailsScreen}
-                    initialParams={{ itemId: 42 }}
+                //initialParams={{ itemId: 42 }}
                 />
                 <Stack.Screen
                     name="CreatePost"
@@ -232,7 +254,8 @@ function App() {
                 // options={({ route }) => ({
                 //     title: route.params.name,
                 // })}
-                />
+                /> */}
+
             </Stack.Navigator>
         </NavigationContainer>
     );
