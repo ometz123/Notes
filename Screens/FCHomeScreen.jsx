@@ -7,6 +7,8 @@ import { TextInput } from 'react-native-gesture-handler';
 import FCModalStack from './FCModalStack'
 import FCCreateCategory from './FCCreateCategory';
 import FCCategories from './FCCategories';
+import FCNotes from './FCNotes';
+import FCCreateNote from './FCCreateNote';
 
 const logo = require('../assets/Logo.png');
 
@@ -229,15 +231,33 @@ function App() {
                 //     title: route.params.name,
                 // })}
                 />
+                <Stack.Screen
+                    name="FCNotes"
+                    component={FCNotes}
+                    options={({ navigation, route }) => ({
+                        title: route.params.category.title,
+                        headerRight: () => (
+                            <Button
+                                title="Create New Note"
+                                onPress={() => {
+                                    navigation.navigate('FCCreateNote', {
+                                        category: route.params.category
+                                    });
+                                }}
+                            />
+                        )
+                    })}
+                />
+                <Stack.Screen
+                    name="FCCreateNote"
+                    component={FCCreateNote}
+                    options={{ title: "New Note" }}
+                />
                 {/* 
                 <Stack.Screen
                     name="Details"
                     component={DetailsScreen}
                 //initialParams={{ itemId: 42 }}
-                />
-                <Stack.Screen
-                    name="CreatePost"
-                    component={CreatePostScreen}
                 />
                 <Stack.Screen
                     name="Profile"

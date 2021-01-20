@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 function FCCategories({ navigation, route }) {
     const [categories, setCategories] = useState([]);
 
-    const GetNotes = async () => {
+    const GetCategories = async () => {
         console.log("Get Notes");
         try {
             let keys = await AsyncStorage.getAllKeys();
@@ -31,7 +31,7 @@ function FCCategories({ navigation, route }) {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            GetNotes();
+            GetCategories();
             // Screen was focused
             // Do something
             //alert('Home Screen was focused');
@@ -56,15 +56,25 @@ function FCCategories({ navigation, route }) {
     //     });
     // }, [navigation]);
     //#endregion
+    showNotes = (category) => {
+        navigation.navigate('FCNotes', {
+            category: category
+        });
+        
+    }
+
     const List = () => {
         if (categories.length < 1) {
-            return <Text>You Have No Notes Yet!</Text>
+            return <Text>You Have No Categories Yet!</Text>
         } else {
             return (categories.map((category, i) => {
                 return (
                     <ListItem
                         key={i}
                         bottomDivider
+                        onPress={() => showNotes(category)}
+                        //onLongPress={() => info(category)}
+
                     >
                         <ListItem.Content>
                             <ListItem.Title>{category.title}</ListItem.Title>
