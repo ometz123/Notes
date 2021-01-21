@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Image, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { TextInput } from 'react-native-gesture-handler';
@@ -8,13 +8,12 @@ import FCGallery from './FCGallery';
 const logo = require('../assets/Logo.png');
 
 export default function FCCreateNote({ navigation, route }) {
-    const { photo } = route.params;
     const [noteText, setNoteText] = useState('');
-    const [noteImageUri, setNoteImageUri] = useState('');
+    const [noteImage, setNoteImage] = useState('');
     const { category } = route.params;
 
     const storeData = async () => {
-        category.notes.push({ noteText: noteText, noteImage: noteImageUri });
+        category.notes.push({ noteText: noteText, noteImage: noteImage });
         console.log('=============setItem================');
         try {
             await AsyncStorage.setItem(`@${category.title}`, JSON.stringify(category));
@@ -32,6 +31,15 @@ export default function FCCreateNote({ navigation, route }) {
             Alert.alert(`Saving error`, `The new note was not saved`);
         }
     }
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            // Screen was focused
+            // Do something
+        });
+        return unsubscribe;
+    }, []);
+
 
     return (
         <>
@@ -53,7 +61,9 @@ export default function FCCreateNote({ navigation, route }) {
                 <Button
                     title=""
                     buttonStyle={{ backgroundColor: "#fcaf17" }}
-                    onPress={() => navigation.navigate('FCCamera')}
+                    onPress={() => {
+                        navigation.navigate('FCCamera', { setNoteImage: setNoteImage });
+                    }}
                     icon={
                         <Icon
                             name="camera-outline"
@@ -62,7 +72,7 @@ export default function FCCreateNote({ navigation, route }) {
                         />
                     }
                 />
-                <FCGallery />
+                <FCGallery setNoteImage={setNoteImage} />
                 {/* <Button
                     title=""
                     buttonStyle={{ backgroundColor: "#8e19d1" }}
@@ -76,9 +86,9 @@ export default function FCCreateNote({ navigation, route }) {
                     }
                 /> */}
             </View>
-            <View style={{ flex: 1, alignItems: 'center', borderColor: 'black',borderWidth:1 }}>
+            <View style={{ flex: 1, alignItems: 'center'/*, borderColor: 'black', borderWidth: 1*/ }}>
                 {<Image
-                    source={logo}
+                    source={noteImage ?? logo}
                     style={{ width: 200, height: 200 }}
                 />}
             </View>

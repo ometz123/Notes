@@ -4,9 +4,11 @@ import { Camera } from 'expo-camera';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button } from 'react-native-elements';
 import { Vibration } from 'react-native';
+import { Dimensions } from 'react-native';
 
 
 export default function FCCamera({ navigation, route }) {
+    const { setNoteImage } = route.params;
     const [hasPermission, setHasPermission] = useState(null);
     const [image, setImage] = useState(null);
     const [camera, setCamera] = useState(null);
@@ -32,9 +34,9 @@ export default function FCCamera({ navigation, route }) {
             let photo = await camera.takePictureAsync();
             Vibration.vibrate();
             //console.log(photo);
-            //setImage({ photoUri: photo.uri });
+            setImage({ photoUri: photo.uri });
             ///
-            navigation.setOptions({ photo: photo });
+            setNoteImage(photo);
             navigation.goBack();
             ///
         }
@@ -43,6 +45,7 @@ export default function FCCamera({ navigation, route }) {
     return (
         <View style={styles.container}>
             <Camera
+                ratio={'16:9'}
                 style={styles.camera}
                 type={type}
                 ref={ref => {

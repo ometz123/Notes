@@ -259,9 +259,7 @@ function App() {
                     component={FCCreateNote}
                     options={({ route }) => ({
                         title: "New Note",
-                        image: route.params.image,
-                        //imageUri:imageUri,
-                        //setImageUri:setImageUri,
+                        photo:route.params.photo
                     })}
                 />
                 <Stack.Screen

@@ -4,9 +4,10 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function FCGallery() {
-    const [image, setImage] = useState(null);
+export default function FCGallery(props) {
+    //const [image, setImage] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -30,9 +31,9 @@ export default function FCGallery() {
         console.log(result);
 
         if (!result.cancelled) {
-            setImage(result.uri);
+            //setImage(result.uri);
             ///
-
+            props.setNoteImage(result);
             ///
         }
     };

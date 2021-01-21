@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'react-native';
 import { Text, View } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { Avatar, ListItem } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function FCNotes({ navigation, route }) {
@@ -20,6 +20,9 @@ export default function FCNotes({ navigation, route }) {
                     //onPress={() => showNotes(category)}
                     //onLongPress={() => info(category)}
                     >
+                        <Avatar
+                        source={note.noteImage}
+                        />
                         <ListItem.Content>
                             <ListItem.Title>{note.noteText}</ListItem.Title>
                         </ListItem.Content>
