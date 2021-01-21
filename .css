@@ -1,3 +1,35 @@
 /* 
 Rockstar Orange Color: #fcaf17
+
+
+
+
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Button } from 'react-native-elements';
+
+<Button
+                title=""
+                buttonStyle={{ backgroundColor: "#8e19d1" }}
+                onPress={pickImage}
+                icon={
+                    <Icon
+                        name="images-outline"
+                        size={40}
+                        color="white"
+                    />
+                }
+            />
+
+
+
+
+
+
+
+
+
+
+
+
+
 */

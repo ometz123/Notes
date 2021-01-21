@@ -5,6 +5,7 @@ import { Button } from 'react-native';
 import { Text, View } from 'react-native';
 import { ListItem, Avatar, Badge } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
+const logo = require('../assets/Logo.png');
 
 function FCCategories({ navigation, route }) {
     const [categories, setCategories] = useState([]);
@@ -60,7 +61,7 @@ function FCCategories({ navigation, route }) {
         navigation.navigate('FCNotes', {
             category: category
         });
-        
+
     }
 
     const List = () => {
@@ -73,9 +74,10 @@ function FCCategories({ navigation, route }) {
                         key={i}
                         bottomDivider
                         onPress={() => showNotes(category)}
-                        //onLongPress={() => info(category)}
+                    //onLongPress={() => info(category)}
 
                     >
+                        <Avatar source={logo} />
                         <ListItem.Content>
                             <ListItem.Title>{category.title}</ListItem.Title>
                         </ListItem.Content>

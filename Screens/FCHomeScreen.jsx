@@ -9,7 +9,8 @@ import FCCreateCategory from './FCCreateCategory';
 import FCCategories from './FCCategories';
 import FCNotes from './FCNotes';
 import FCCreateNote from './FCCreateNote';
-
+import FCCamera from './FCCamera';
+import FCGallery from './FCGallery';
 const logo = require('../assets/Logo.png');
 
 function FCHomeScreen({ navigation, route }) {
@@ -180,6 +181,7 @@ function LogoTitle() {
 const Stack = createStackNavigator();
 
 function App() {
+    //const [imageUri, setImageUri] = useState({})
     return (
         <NavigationContainer>
             <Stack.Navigator
@@ -209,18 +211,20 @@ function App() {
                         //     fontWeight: 'bold',
                         // },
                         headerRight: () => (
-                            <Button
-                                title="Create New Category"
-                                onPress={() => {
-                                    navigation.navigate('FCCreateCategory'
-                                        //, {
-                                        //itemId: 86,
-                                        //otherParam: 'anything you want here',
-                                        //}
-                                    );
-                                    //navigation.setParams({ itemId: 69 })
-                                }}
-                            />
+                            <View style={{ padding: 10 }}>
+                                <Button
+                                    title="Create New Category"
+                                    onPress={() => {
+                                        navigation.navigate('FCCreateCategory'
+                                            //, {
+                                            //itemId: 86,
+                                            //otherParam: 'anything you want here',
+                                            //}
+                                        );
+                                        //navigation.setParams({ itemId: 69 })
+                                    }}
+                                />
+                            </View>
                         )
                     })}
                 />
@@ -237,45 +241,39 @@ function App() {
                     options={({ navigation, route }) => ({
                         title: route.params.category.title,
                         headerRight: () => (
-                            <Button
-                                title="Create New Note"
-                                onPress={() => {
-                                    navigation.navigate('FCCreateNote', {
-                                        category: route.params.category
-                                    });
-                                }}
-                            />
+                            <View style={{ padding: 10 }}>
+                                <Button
+                                    title="Create New Note"
+                                    onPress={() => {
+                                        navigation.navigate('FCCreateNote', {
+                                            category: route.params.category
+                                        });
+                                    }}
+                                />
+                            </View>
                         )
                     })}
                 />
                 <Stack.Screen
                     name="FCCreateNote"
                     component={FCCreateNote}
-                    options={{ title: "New Note" }}
-                />
-                {/* 
-                <Stack.Screen
-                    name="Details"
-                    component={DetailsScreen}
-                //initialParams={{ itemId: 42 }}
-                />
-                <Stack.Screen
-                    name="Profile"
-                    component={ProfileScreen}
                     options={({ route }) => ({
-                        title: route.params.name,
-                        headerTitle: props => <LogoTitle {...props} />
-
+                        title: "New Note",
+                        image: route.params.image,
+                        //imageUri:imageUri,
+                        //setImageUri:setImageUri,
                     })}
                 />
                 <Stack.Screen
-                    name="FCModalStack"
-                    component={FCModalStack}
-                // options={({ route }) => ({
-                //     title: route.params.name,
-                // })}
-                /> */}
-
+                    name="FCCamera"
+                    component={FCCamera}
+                    options={{ title: "Camera" }}
+                />
+                <Stack.Screen
+                    name="FCGallery"
+                    component={FCGallery}
+                    options={{ title: "Gallery" }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
