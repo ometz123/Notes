@@ -99,11 +99,11 @@ export default function FCCreateCategory({ navigation, route }) {
             <Text style={{ color: "#f00" }}>
                 {categoryMessage}
             </Text>
-            <Button
+            {/* <Button
                 color='#f00'
                 title="clear All Categories"
                 onPress={() => { clearAllData() }}
-            />
+            /> */}
         </View>
     );
 }

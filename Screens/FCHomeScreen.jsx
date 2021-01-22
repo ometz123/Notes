@@ -231,9 +231,9 @@ function App() {
                 <Stack.Screen
                     name="FCCreateCategory"
                     component={FCCreateCategory}
-                // options={({ route }) => ({
-                //     title: route.params.name,
-                // })}
+                options={({ route }) => ({
+                    title: "Create new category",
+                })}
                 />
                 <Stack.Screen
                     name="FCNotes"
