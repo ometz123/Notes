@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
+import { Alert } from 'react-native';
 import { Button } from 'react-native';
 import { Text, View } from 'react-native';
 import { ListItem, Avatar, Badge } from 'react-native-elements'
@@ -11,16 +12,16 @@ function FCCategories({ navigation, route }) {
     const [categories, setCategories] = useState([]);
 
     const GetCategories = async () => {
-        console.log("Get Notes");
+        //console.log("Get Notes");
         try {
             let keys = await AsyncStorage.getAllKeys();
             let results = await AsyncStorage.multiGet(keys);
-            console.log('results= ', results);
+            //console.log('results= ', results);
             let categories = [];
             results.forEach(category => {
                 categories.push(JSON.parse(category[1]))
             })
-            console.log('categories= ', categories);
+            //console.log('categories= ', categories);
             setCategories(categories);
         } catch (error) {
             console.error(error)
@@ -28,7 +29,28 @@ function FCCategories({ navigation, route }) {
 
 
     };
-
+    const info = (category) => {
+        Alert.alert(
+            `Delete category?`,
+            `Are you sure you want to delete \n"${category.title}"?\n
+            It has ${category.notes.length} notes!`,
+            [
+                { text: "Cancel", },
+                { text: "OK", onPress: () => deleteCategory(category) },
+            ],
+            { cancelable: false }
+        );
+    }
+    const deleteCategory = async (category) => {
+        //console.log("category: ", category.title);
+        try {
+            await AsyncStorage.removeItem(`@${category.title}`)
+            GetCategories();
+        } catch (e) {
+            // remove error
+            Alert.alert(`Delete error`, `Category "${value}" was not deleted!`);
+        }
+    }
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -66,7 +88,11 @@ function FCCategories({ navigation, route }) {
 
     const List = () => {
         if (categories.length < 1) {
-            return <Text>You Have No Categories Yet!</Text>
+            return (<ListItem>
+                <ListItem.Content>
+                    <ListItem.Title>You Have No Categories Yet!</ListItem.Title>
+                </ListItem.Content>
+            </ListItem>);
         } else {
             return (categories.map((category, i) => {
                 return (
@@ -74,7 +100,7 @@ function FCCategories({ navigation, route }) {
                         key={i}
                         bottomDivider
                         onPress={() => showNotes(category)}
-                    //onLongPress={() => info(category)}
+                        onLongPress={() => info(category)}
 
                     >
                         <Avatar source={logo} />

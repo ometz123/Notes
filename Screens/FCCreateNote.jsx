@@ -9,16 +9,18 @@ const logo = require('../assets/Logo.png');
 
 export default function FCCreateNote({ navigation, route }) {
     const [noteText, setNoteText] = useState('');
-    const [noteImage, setNoteImage] = useState('');
+    const [noteImage, setNoteImage] = useState({});
     const { category } = route.params;
+    const [noteButton, setNoteButton] = useState(true);
+    const [noteMessage, setNoteMessage] = useState("");
 
     const storeData = async () => {
         category.notes.push({ noteText: noteText, noteImage: noteImage });
-        console.log('=============setItem================');
+        //console.log('=============setItem================');
         try {
             await AsyncStorage.setItem(`@${category.title}`, JSON.stringify(category));
             const item = await AsyncStorage.getItem(`@${category.title}`);
-            console.log("item: ", item);
+            //console.log("item: ", item);
             Alert.alert(
                 `New Note`,
                 "You created a new note!",
@@ -31,7 +33,16 @@ export default function FCCreateNote({ navigation, route }) {
             Alert.alert(`Saving error`, `The new note was not saved`);
         }
     }
-
+    useEffect(() => {
+        if (noteText.trim() === "" || noteText.length < 3) {
+            setNoteButton(true);
+            setNoteMessage("Note must be at least 3 characters");
+        }
+        else {
+            setNoteMessage("");
+            setNoteButton(false);
+        }
+    }, [noteText, noteImage]);
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             // Screen was focused
@@ -39,7 +50,6 @@ export default function FCCreateNote({ navigation, route }) {
         });
         return unsubscribe;
     }, []);
-
 
     return (
         <>
@@ -50,8 +60,10 @@ export default function FCCreateNote({ navigation, route }) {
                 value={noteText}
                 onChangeText={setNoteText}
             />
+            <Text style={{ alignSelf: "center", color: "red" }}>{noteMessage}</Text>
             <Button
                 title="Done"
+                disabled={noteButton}
                 onPress={() => {
                     storeData();
                 }}

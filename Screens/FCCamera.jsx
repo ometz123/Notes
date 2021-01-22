@@ -13,7 +13,7 @@ export default function FCCamera({ navigation, route }) {
     const [image, setImage] = useState(null);
     const [camera, setCamera] = useState(null);
     //#region Hide
-    const [type, setType] = useState(Camera.Constants.Type.back);
+    const [type, setType] = useState(Camera.Constants.Type.front);
     useEffect(() => {
         (async () => {
             const { status } = await Camera.requestPermissionsAsync();

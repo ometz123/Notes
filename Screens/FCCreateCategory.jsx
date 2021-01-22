@@ -14,23 +14,23 @@ export default function FCCreateCategory({ navigation, route }) {
     const clearAllData = async () => {
         await AsyncStorage.clear();
         alert('Async Storage is clean!');
-        console.log('============getAllKeys==============');
+        //console.log('============getAllKeys==============');
         let keys = []
         try {
             keys = await AsyncStorage.getAllKeys()
         } catch (e) {
             // read key error
         }
-        console.log(keys)
+        //console.log(keys)
         // example console.log result:
         // ['@MyApp_user', '@MyApp_key']
-        console.log('====================================');
+        //console.log('====================================');
 
     }
 
     const storeData = async (value) => {
 
-        console.log('=============setItem================');
+        //console.log('=============setItem================');
         try {
             if (await AsyncStorage.getItem(`@${value}`)) {
                 Alert.alert(
@@ -48,7 +48,7 @@ export default function FCCreateCategory({ navigation, route }) {
                 notes: []
             }));
             const item = await AsyncStorage.getItem(`@${value}`);
-            console.log(item);
+            //console.log(item);
             Alert.alert(
                 `"${newCategory}"`,
                 "You created a new category!",

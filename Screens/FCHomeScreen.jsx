@@ -265,7 +265,7 @@ function App() {
                 <Stack.Screen
                     name="FCCamera"
                     component={FCCamera}
-                    options={{ title: "Camera" }}
+                    options={{ title: "Smile :)" }}
                 />
                 <Stack.Screen
                     name="FCGallery"
