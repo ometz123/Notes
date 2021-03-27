@@ -79,7 +79,7 @@ function FCCategories({ navigation, route }) {
     //     });
     // }, [navigation]);
     //#endregion
-    showNotes = (category) => {
+    const showNotes = (category) => {
         navigation.navigate('FCNotes', {
             category: category
         });
